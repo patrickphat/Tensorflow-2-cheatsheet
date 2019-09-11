@@ -1,8 +1,17 @@
+###### 
 
+<center><img src='https://miro.medium.com/max/4928/1*-QTg-_71YF0SVshMEaKZ_g.png'> </center>
+# TF 2.0 cheatsheet! 
 
+<a href='https://github.com/patrickphatnguyen/Tensorflow-2-cheatsheet'><img src='https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png' width=50></a>A **minimal** doc on **Tensorflow 2.0**  (let's call it a cheatsheet!) that you don't need to wander around and  start being confused of all modules available in Tensorflow (If you're a  newbie), because I already put all the things in one place, only **necessary things**  are mentioned in the cheatsheet that is just enough to make you  dangerous. So you can later learn by yourself more complex modules in  Tensorflow.
 
+`Author` <a href='https://github.com/patrickphatnguyen'><img src='https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png' width=40></a> <a href='https://www.linkedin.com/in/tphat/'><img src='https://cdn1.iconfinder.com/data/icons/logotypes/32/square-linkedin-512.png' width=40></a> Patrick Nguyen (University of Information Technology, Vietnam) 
+
+`References` from Tensorflow docs and bunch of places on the internet!
 
 # Working with Tensors
+
+Tensors are the most lowest-level units that you have to work on if you want to build any kind of Neural Network using Tensorflow.
 
 ## tf.constant()
 
@@ -76,7 +85,11 @@ Inserts a dimension of 1 into a tensor's shape.
 Returns the index with the largest value across dimensions of a tensor.
 
 ```python
+import tensorflow as tf
+a = tf.convert_to_tensor([[1, 10, 7], 
+                           [3, 4, 9]])
 
+tf.argmax(a,axis=1) # [1,2]
 ```
 
 ## tf.arg_min()
@@ -84,26 +97,75 @@ Returns the index with the largest value across dimensions of a tensor.
 Returns the index with the largest value across dimensions of a tensor.
 
 ```python
-
+import tensorflow as tf
+a = tf.convert_to_tensor([[1, 10, 7], 
+                           [3, 4, 9]])
+tf.argmin(a,axis=1) # [0,0]
 ```
 
 ## tf.reduce_sum()
 
+Return the sum of all elements in the tensor or sum of the tensor along specified axis
 
+``` python
+a = tf.convert_to_tensor([[1, 10, 7], 
+                           [3, 4, 9]])
+tf.reduce_sum(a) # 34
+tf.reduce_sum(a,axis = 0) # [4,14,16]
+tf.reduce_sum(a,axis = 1) # [18,16]
+```
 
 ## tf.reduce_prod()
 
+Return the product of all elements in the tensor or product of the tensor along specified axis
+
+```python
+a = tf.convert_to_tensor([[1, 10, 7], 
+                           [3, 4, 9]])
+tf.reduce_prod(a) # 7560
+tf.reduce_prod(a,axis = 0) # [3,40,63]
+tf.reduce_prod(a,axis = 1) # [70,108]
+```
+
 ## tf.reduce_mean()
+Return the product of all elements in the tensor or product of the tensor along specified axis.
+
+```python
+a = tf.convert_to_tensor([[1, 10, 7], 
+                           [3, 4, 9]])
+tf.reduce_mean(a) # 7560
+tf.reduce_mean(a,axis = 0) # [3,40,63]
+tf.reduce_(a,axis = 1) # [70,108]
+```
 
 ## tf.reduce_max()
+Return the max of all elements in the tensor or product of the tensor along specified axis.
+
+```python
+a = tf.convert_to_tensor([[1, 10, 7], 
+                           [3, 4, 9]])
+tf.reduce_max(a) # 10
+tf.reduce_max(a,axis = 0) # [3,10,9]
+tf.reduce_max(a,axis = 1) # [70,108]
+```
 
 ## tf.reduce_min()
+Return the min of all elements in the tensor or product of the tensor along specified axis.
 
-## 
+```python
+a = tf.convert_to_tensor([[1, 10, 7], 
+                           [3, 4, 9]])
+tf.reduce_min(a) # 1
+tf.reduce_min(a,axis = 0) # [1,4,7]
+tf.reduce_min(a,axis = 1) # [1,3]
+```
+
+
+
 
 # Loading and preprocessing data
 
-## tf.dataset
+## tf.dataset 
 
 a module for manage and load batches of dataset at training & test time
 
@@ -136,6 +198,24 @@ image_dataset = image_dataset.map(
 for img, path in image_dataset:
   batch_features = feature_extractor_model(img)
     ....
+
+```
+
+## tf.keras.utils
+
+### .get_file()
+
+This module allows you to download a file via a link and put that to a specified folder. You can extract the file if you wish!
+
+```python
+data_path = os.path.abspath('.') + "/my_data_folder/"
+train_zip_url = 'http://images.cocodataset.org/zips/train2014.zip'
+name_of_zip = "my_train_data.zip"
+
+train_zip = tf.keras.utils.get_file(name_of_zip,
+                                      cache_subdir=data_path,
+                                      origin = train_zip_url ,
+                                      extract = True)
 
 ```
 
@@ -282,9 +362,9 @@ class ResnetIdentityBlock(tf.keras.Model):
 
 # Automatic Differentiation
 
-## tf.GradientTape()
+## tf.GradientTape
 
-In tensorflow 2, Gradient Tape is born for the sake of automatic differentiation - computing the gradient of a computation with respect to its input variables. Tensorflow "records" all operations executed inside the context of a [`tf.GradientTape`](https://www.tensorflow.org/api_docs/python/tf/GradientTape) onto a "tape". 
+In tensorflow 2, Gradient Tape is born for the sake of **automatic differentiation** - computing the gradient of a computation with respect to its input variables. Tensorflow "records" all operations executed inside the context of a `tf.GradientTape` onto a "tape". 
 
 ```python
 def f(w1, w2):
@@ -314,7 +394,7 @@ You can also using `tf.GradientTape()` to compute gradient corresponded to a cha
       x, hidden, _  = decoder(x, features, hidden)
       
       # Compute loss function
-      loss += loss_func(target[:,i], x)
+      loss += loss_func(target[i], x)
       ....
     
   .....
@@ -332,9 +412,3 @@ You can also using `tf.GradientTape()` to compute gradient corresponded to a cha
 # References 
 
 **Tensorflow's doc** https://www.tensorflow.org/tutorials/eager/
-
-
-
-
-
-By Patrick Nguyen
