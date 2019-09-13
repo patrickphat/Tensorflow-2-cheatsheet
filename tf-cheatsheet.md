@@ -225,45 +225,47 @@ train_zip = tf.keras.utils.get_file(name_of_zip,
 
 ## tf.keras
 
-### .optimizers 
-
-#### .Adam
-
-Optimizer that implements the Adam algorithm.
-
-#### .Adagrad
-
-Optimizer that implements the Adagrad algorithm.
-
-#### .Adadelta
-
-Optimizer that implements the Adadelta algorithm.
-
-#### .Adamax
-
-Optimizer that implements the Adamax algorithm.
-
-#### .Ftrl
-
-Optimizer that implements the FTRL algorithm.
-
-#### .Nadam 
-
-Optimizer that implements the NAdam algorithm.
-
-#### .RMSprop
-
-Optimizer that implements the RMSprop algorithm.
-
-#### .SGD
-
-Stochastic gradient descent and momentum optimizer.
-
-
-
 ### .layers
 
+#### .Conv1D
+
+#### .Conv2D
+
+#### .Conv3D
+
+#### .GlobalAveragePooling1D
+
+#### .GlobalAveragePooling2D
+
+#### .GlobalAveragePooling3D
+
+#### .GlobalMaxPooling1D
+
+`shortcut` GlobalMaxPool1D
+
+
+
+#### .GlobalMaxPooling2D
+
+`shortcut`
+
+#### .GlobalMaxPooling3D
+
+#### 
+
+#### 
+
+#### .Dense
+
+#### .Dropout
+
 #### .Embedding
+
+#### .Flatten
+
+#### .LSTM
+
+#### .GRU
 
 Turns positive integers (indexes) into dense vectors of fixed size.
 
@@ -304,6 +306,8 @@ model.add(Dropout(rate=0.5))
 model.add(Dense(10, activation='softmax'))
 ```
 
+## Functional API
+
 ## Create custom layers
 
 If you want to create your own custom layers, you can inherit from `tf.keras.layers.Layer` class then create your own using atomic tensorflow operations.
@@ -329,7 +333,7 @@ layer = MyDenseLayer(10)
 
 ## Create custom models
 
-So if you want to be able to call `.fit()`, `.evaluate()`, or `.predict()` on those blocks or you want to be able to save and load those blocks separately or something you should use the Model class. A model should contain multiple layers while layer contains only 1 pass-through from input to output (theoretically speaking :D).
+So if you want to be able to call `.fit()`, `.evaluate()`, or `.predict()` on those blocks or you want to be able to save and load those blocks separately or something you should use the Model class. A model should contain multiple layers while layer contains only 1 pass-through from input to output (theoretically speaking).
 
 ```python
 class ResnetIdentityBlock(tf.keras.Model):
@@ -388,7 +392,7 @@ You can also using `tf.GradientTape()` to compute gradient corresponded to a cha
     features = encoder(image_tensor) 
     ..... 
 
-    for i in range(target.shape[1]):
+    for i in range(target.shape[1])
       
       # Get output and hidden from decoder
       x, hidden, _  = decoder(x, features, hidden)
@@ -405,6 +409,42 @@ You can also using `tf.GradientTape()` to compute gradient corresponded to a cha
   
   optimizer.apply_gradients(zip(gradients,train_params)) # apply gradients
 ```
+
+## tf.keras
+
+### .optimizers 
+
+#### .Adam
+
+Optimizer that implements the Adam algorithm.
+
+#### .Adagrad
+
+Optimizer that implements the Adagrad algorithm.
+
+#### .Adadelta
+
+Optimizer that implements the Adadelta algorithm.
+
+#### .Adamax
+
+Optimizer that implements the Adamax algorithm.
+
+#### .Ftrl
+
+Optimizer that implements the FTRL algorithm.
+
+#### .Nadam 
+
+Optimizer that implements the NAdam algorithm.
+
+#### .RMSprop
+
+Optimizer that implements the RMSprop algorithm.
+
+#### .SGD
+
+Stochastic gradient descent and momentum optimizer.
 
 
 
